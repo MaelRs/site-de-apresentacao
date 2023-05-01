@@ -1,0 +1,169 @@
+@charset "UTF-8";
+body{
+    background : rgba(40, 26, 224, 0.192);
+    background-image: url(imagens/fundo\ 1.avif);
+    background-repeat: repeat-y;
+    background-size: cover;
+    
+    font-size: 1em
+    
+}
+p{
+    color: white;
+}
+ul {
+    background-color: rgb(120, 120, 192);
+    color: white;
+}
+#fc{
+    background-color: #3d3c3c;
+    font-size: large;
+}
+#fc a{
+    text-decoration: none;
+    color: white;
+}
+#fc a:hover{
+    color: rgb(240, 225, 17);
+    background-color: black;
+}
+
+#fin>li{
+    background-color: white;
+    font-weight: bold;
+    display: inline-block;        
+    padding: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.603);
+    transform: translate(-3px,-3px);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.719);
+    transition: transform 0.3s, border 1s;
+}
+header{
+    background-image: linear-gradient(to bottom, rgb(93, 93, 214),rgb(59, 117, 59), rgb(36, 36, 71));
+}
+header h1{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding-top: 20px;
+}
+header h4{
+    color: white;
+    text-align: right;
+}
+h2{
+    color: white;
+}
+.dif{
+    color: white;
+}
+h4{
+    text-align: right;
+    color: white;
+}
+header ul{
+    display: block;
+}
+
+nav {
+    background-color: rgb(64, 64, 131);
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: left;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #999;
+}
+
+div{
+    display: inline-block; width: 77%; 
+    background-color: rgba(70, 70, 226, 0.932);  
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8em;
+    margin: 5px;
+    border: 5px;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgb(0, 0, 0);
+    
+}
+
+main div p{
+    font-size: 1.1em;
+}
+
+#image{
+    background-color: rgba(29, 28, 28, 0.664);
+    display: inline-block; width: auto;
+    height: auto;
+    margin: 5px;
+    border: 5px;
+    padding: 5px;    
+    
+}
+#return{
+    background-color: white;
+    width: auto;
+}
+section{
+    background-color: white;
+    max-width: 600px;
+    padding: 10px;
+    margin: auto;
+    border: 1px solid darkblue;
+    border-radius: 15px;
+}
+section p{
+    color: black;
+}
+.curriculo{
+    background-image: linear-gradient(to right, rgb(22, 22, 22), rgb(131, 128, 128) );
+    
+}
+.fap{
+    background-image: url(imagens/logo\ fapemig\ p.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    color: white;
+}
+
+.mgs{
+    background-image: url(imagens/MGS-p.jpg);
+    background-repeat: no-repeat;
+    background-position: top right;
+    color: white;
+}
+.fiat{
+    background-image: url(imagens/fiat\ p.jpg);
+    background-repeat: no-repeat;
+    background-position: top right;
+    color: white;
+}
+
+footer{
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 0.8em;
+}
+
