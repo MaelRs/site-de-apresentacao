@@ -147,7 +147,6 @@ section>a:hover{
     background-image: url(imagens/logo\ fapemig\ p.png);
     background-repeat: no-repeat;
     background-position: top right;
-    width: 100vw;
     color: white;
 }
 
@@ -155,14 +154,12 @@ section>a:hover{
     background-image: url(imagens/MGS-p.jpg);
     background-repeat: no-repeat;
     background-position: top right;
-    width: 100vw;
     color: white;
 }
 .fiat{
     background-image: url(imagens/fiat\ p.jpg);
     background-repeat: no-repeat;
     background-position: top right;
-    width: 100vw;
     color: white;
 }
 
