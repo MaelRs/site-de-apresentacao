@@ -136,6 +136,9 @@ section{
 section p{
     color: black;
 }
+section h1{
+    text-align: center;
+}
 section>a:hover{
     background-color: yellow;
     color: black;
