@@ -143,6 +143,9 @@ section>a:hover{
     background-color: yellow;
     color: black;
 }
+section>ul:hover{
+    background-color: green;
+}
 .curriculo{
     background-image: linear-gradient(to right, rgb(22, 22, 22), rgb(131, 128, 128) );
     
