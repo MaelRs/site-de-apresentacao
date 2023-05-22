@@ -98,8 +98,8 @@ nav ul li a:hover {
 
 div{
     display: inline-block; width: 77%; 
-    background-color: rgba(70, 70, 226, 0.932);  
-    color: white;
+    background-color: rgba(253, 253, 253, 0.932);  
+    color: black;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.8em;
     margin: 5px;
