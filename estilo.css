@@ -185,6 +185,7 @@ section>ul>a:hover{
 }
 .e-mail {
     background-color: #fff;
+    color: black;
     width: auto;
     font-size: 1em;
 }
