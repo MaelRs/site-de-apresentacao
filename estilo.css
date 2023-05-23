@@ -19,8 +19,9 @@ ul {
     color: white;
 }
 #fc{
-    background-color: #3d3c3c;
+    background-color: rgba(70, 70, 226, 0.932);
     font-size: large;
+    width: auto;
 }
 #fc a{
     text-decoration: none;
@@ -188,6 +189,9 @@ section>ul>a:hover{
     color: black;
     width: auto;
     font-size: 1em;
+}
+content{
+    display: inline-block; width: 50%;
 }
 
 footer{
