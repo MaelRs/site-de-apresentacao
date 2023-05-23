@@ -183,6 +183,11 @@ section>ul>a:hover{
     color: black;
     width: auto;
 }
+.e-mail {
+    background-color: #fff;
+    width: auto;
+    font-size: 1em;
+}
 
 footer{
     background-color: black;
