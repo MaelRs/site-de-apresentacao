@@ -160,20 +160,23 @@ section>ul>a:hover{
     background-image: url(imagens/logo\ fapemig\ p.png);
     background-repeat: no-repeat;
     background-position: top right;
-    color: white;
+    color: black;
+    width: auto;
 }
 
 .mgs{
     background-image: url(imagens/MGS-p.jpg);
     background-repeat: no-repeat;
     background-position: top right;
-    color: white;
+    color: black;
+    width: auto;
 }
 .fiat{
     background-image: url(imagens/fiat\ p.jpg);
     background-repeat: no-repeat;
     background-position: top right;
-    color: white;
+    color: black;
+    width: auto;
 }
 
 footer{
