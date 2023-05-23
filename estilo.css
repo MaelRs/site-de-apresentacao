@@ -21,7 +21,7 @@ ul {
 #fc{
     background-color: rgba(70, 70, 226, 0.932);
     font-size: large;
-    width: 100vw;
+    width: auto;
 }
 #fc a{
     text-decoration: none;
@@ -189,11 +189,9 @@ section>ul>a:hover{
     color: black;
     width: auto;
     font-size: 1em;
-    display: inline-block; width: 25%;
+    display: inline-block; width: 40%;
 }
-content{
-    display: inline-block; width: 50%;
-}
+
 #button {
     display: inline-block; width: 10%;
 }
