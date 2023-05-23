@@ -21,7 +21,7 @@ ul {
 #fc{
     background-color: rgba(70, 70, 226, 0.932);
     font-size: large;
-    width: auto;
+    width: 100vw;
 }
 #fc a{
     text-decoration: none;
