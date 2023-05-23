@@ -189,9 +189,13 @@ section>ul>a:hover{
     color: black;
     width: auto;
     font-size: 1em;
+    display: inline-block; width: 25%;
 }
 content{
     display: inline-block; width: 50%;
+}
+#button {
+    display: inline-block; width: 10%;
 }
 
 footer{
