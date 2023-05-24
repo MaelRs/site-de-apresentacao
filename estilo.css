@@ -183,6 +183,7 @@ section>ul>a:hover{
 .qq{
     color: black;
     width: auto;
+    position: relative;
 }
 .e-mail {
     background-color: #fff;
