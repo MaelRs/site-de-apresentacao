@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação de Eleição</title>
+  <style>
+    .candidate {
+      display: none;
+      width: 200px;
+      height: 200px;
+    }
+    .confirmation {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Simulação de Eleição</h1>
+
+  <div>
+    <label for="total-votes">Quantidade de votos a serem processados:</label>
+    <input type="number" id="total-votes">
+    <button onclick="startVoting()">Iniciar Votação</button>
+  </div>
+
+  <div id="voting-container" style="display: none;">
+    <h2>Votação em andamento</h2>
+    <p id="votes-processed">Votos processados: 0 / <span id="total-votes-text"></span></p>
+
+    <div id="candidate-container">
+      <h3>Candidatos:</h3>
+      <div>
+        <button onclick="vote(10)">Candidato 10 - João
+        <img src="imagens/bobesponja.jpg" alt="João"></button>
+        <button onclick="vote(20)">Candidato 20 - José
+        <img src="imagens/pernalonga.jpg" alt="José"></button>
+      </div>
+    </div>
+
+    <div id="confirmation-container" class="confirmation">
+      <h3>Confirmação de voto:</h3>
+      <p id="selected-candidate"></p>
+      <button onclick="confirmVote()">Confirmar</button>
+      <button onclick="cancelVote()">Cancelar</button>
+    </div>
+  </div>
+
+  <div id="result-container" style="display: none;">
+    <h2>Resultado da Eleição</h2>
+    <p id="total-valid-votes"></p>
+    <p id="votes-joao"></p>
+    <p id="votes-jose"></p>
+    <div id="vote-graph"></div>
+    <p id="winner-message" style="display: none;"></p>
+  </div>
+
+  <script>
+    let totalVotes = 0;
+    let votesProcessed = 0;
+    let votesJoao = 0;
+    let votesJose = 0;
+
+    function startVoting() {
+      totalVotes = parseInt(document.getElementById("total-votes").value);
+      document.getElementById("total-votes-text").textContent = totalVotes;
+      document.getElementById("voting-container").style.display = "block";
+    }
+
+    function vote(candidateNumber) {
+      const candidateContainer = document.getElementById("candidate-container");
+      const confirmationContainer = document.getElementById("confirmation-container");
+
+      candidateContainer.style.display = "none";
+      confirmationContainer.style.display = "block";
+      document.getElementById("selected-candidate").textContent = "Você selecionou o Candidato " + candidateNumber;
+
+      if (candidateNumber === 10) {
+        document.getElementById("selected-candidate").textContent += " - João";
+      } else if (candidateNumber === 20) {
+        document.getElementById("selected-candidate").textContent += " - José";
+      }
+    }
+
+    function confirmVote() {
+      votesProcessed++;
+
+      const candidateContainer = document.getElementById("candidate-container");
+      const confirmationContainer = document.getElementById("confirmation-container");
+
+      candidateContainer.style.display = "block";
+      confirmationContainer.style.display = "none";
+
+      const selectedCandidate = document.getElementById("selected-candidate").textContent;
+      if (selectedCandidate.includes("João")) {
+        votesJoao++;
+      } else if (selectedCandidate.includes("José")) {
+        votesJose++;
+      }
+
+      document.getElementById("votes-processed").textContent = "Votos processados: " + votesProcessed + " / " + totalVotes;
+
+      if (votesProcessed === totalVotes) {
+        endVoting();
+      }
+    }
+
+    function cancelVote() {
+      const candidateContainer = document.getElementById("candidate-container");
+      const confirmationContainer = document.getElementById("confirmation-container");
+
+      candidateContainer.style.display = "block";
+      confirmationContainer.style.display = "none";
+    }
+
+    function endVoting() {
+      const votingContainer = document.getElementById("voting-container");
+      const resultContainer = document.getElementById("result-container");
+      const totalValidVotes = votesJoao + votesJose;
+      const winner = votesJoao > votesJose ? "Candidato 10 - João" : "Candidato 20 - José";
+
+      votingContainer.style.display = "none";
+      resultContainer.style.display = "block";
+
+      document.getElementById("total-valid-votes").textContent = "Total de votos válidos: " + totalValidVotes;
+      document.getElementById("votes-joao").textContent = "Votos para o Candidato 10 - João: " + votesJoao;
+      document.getElementById("votes-jose").textContent = "Votos para o Candidato 20 - José: " + votesJose;
+
+      // Exibição de gráfico de barras (opcional)
+      const voteGraph = document.getElementById("vote-graph");
+      voteGraph.style.width = "400px";
+      voteGraph.style.height = "200px";
+      voteGraph.style.border = "1px solid #000";
+
+      const joaoPercentage = (votesJoao / totalValidVotes) * 100;
+      const josePercentage = (votesJose / totalValidVotes) * 100;
+
+      const joaoBar = document.createElement("div");
+      joaoBar.style.width = joaoPercentage + "%";
+      joaoBar.style.height = "100%";
+      joaoBar.style.backgroundColor = "blue";
+      joaoBar.style.float = "left";
+
+      const joseBar = document.createElement("div");
+      joseBar.style.width = josePercentage + "%";
+      joseBar.style.height = "100%";
+      joseBar.style.backgroundColor = "red";
+      joseBar.style.float = "left";
+
+      voteGraph.appendChild(joaoBar);
+      voteGraph.appendChild(joseBar);
+
+      // Exibição do candidato eleito
+      const winnerMessage = document.getElementById("winner-message");
+      winnerMessage.style.display = "block";
+      winnerMessage.textContent = "Votação encerrada! O candidato eleito foi " + winner + " com " + (winner === "Candidato 10 - João" ? votesJoao : votesJose) + " votos válidos.";
+    }
+  </script>
+</body>
+</html>
