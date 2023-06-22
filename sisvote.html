@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votação</title>
+    
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .candidates {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .candidates label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+
+    .candidates input[type="radio"] {
+      display: none;
+    }
+
+    .candidates img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 5px;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .candidates input[type="radio"]:checked + img {
+      opacity: 1;
+    }
+
+    .confirm-button {
+      text-align: center;
+    }
+
+    .result-chart {
+      margin-top: 20px;
+    }
+
+    .result-bar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .result-bar span {
+      margin-right: 10px;
+    }
+
+    .result-bar .bar {
+      height: 20px;
+      background-color: #2196F3;
+    }
+  </style>
+</head>
+<body>
+    
+  <h1>Quem é o melhor Personagem de desenho animado?</h1>
+
+  <div class="candidates">
+    <label>
+      <input type="radio" name="candidate" value="candidate1">
+      <img src="imagens/bobesponja.jpg" alt="Bobesponja">
+      <span>Candidate 1</span>
+    </label>
+
+    <label>
+      <input type="radio" name="candidate" value="candidate2">
+      <img src="imagens/pernalonga.jpg" alt="Pernalonga">
+      <span>Candidate 2</span>
+    </label>
+
+    <label>
+      <input type="radio" name="candidate" value="candidate3">
+      <img src="imagens/picapau.jpg" alt="picapau">
+      <span>Candidate 3</span>
+    </label>
+  </div>
+
+  <div class="confirm-button">
+    <button onclick="confirmVote()">Confirmar Voto</button>
+  </div>
+
+  <div class="result-chart">
+    <h2>Resultado da Votação</h2>
+    <div class="result-bar" id="result1">
+      <span>Candidate 1:</span>
+      <div class="bar"></div>
+    </div>
+    <div class="result-bar" id="result2">
+      <span>Candidate 2:</span>
+      <div class="bar"></div>
+    </div>
+    <div class="result-bar" id="result3">
+      <span>Candidate 3:</span>
+      <div class="bar"></div>
+    </div>
+  </div>
+
+  <script>
+    const result1 = document.getElementById('result1');
+    const result2 = document.getElementById('result2');
+    const result3 = document.getElementById('result3');
+    const confirmButton = document.querySelector('.confirm-button button');
+    const candidateRadios = document.querySelectorAll('.candidates input[type="radio"]');
+    const resultBars = document.querySelectorAll('.result-bar');
+
+    let votes = {
+      candidate1: 0,
+      candidate2: 0,
+      candidate3: 0
+    };
+    
+
+    function confirmVote() {
+      const selectedCandidate = document.querySelector('.candidates input[type="radio"]:checked');
+
+      if (selectedCandidate) {
+        votes[selectedCandidate.value]++;
+        updateResultChart();
+        resetSelection();
+        confirmButton.disabled = true;
+      }
+    }
+
+    function updateResultChart() {
+      const totalVotes = Object.values(votes).reduce((sum, vote) => sum + vote, 0);
+
+      resultBars.forEach((resultBar, index) => {
+        const candidateName = `candidate${index + 1}`;
+        const votePercentage = totalVotes !== 0 ? ((votes[candidateName] / totalVotes) * 100).toFixed(2) : 0;
+
+        resultBar.querySelector('.bar').style.width = `${votePercentage}%`;
+        resultBar.querySelector('.bar').textContent = `${votePercentage}%`;
+      });
+    }
+
+    function resetSelection() {
+      candidateRadios.forEach(candidateRadio => {
+        candidateRadio.checked = false;
+      });
+    }
+  </script>
+</body>
+</html>
+
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Votação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #votingForm {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .candidateImage {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      margin: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .candidateImage:hover {
+      border-color: #999;
+    }
+
+    .selectedCandidate {
+      border-color: #333;
+    }
+
+    #confirmButton {
+      display: none;
+      margin-top: 10px;
+    }
+
+    #resultChart {
+      margin-top: 20px;
+    }
+
+    #resultChart div {
+      margin-bottom: 10px;
+    }
+
+    .candidateName {
+      display: inline-block;
+      width: 100px;
+    }
+
+    .progressBar {
+      display: inline-block;
+      width: 200px;
+      height: 20px;
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Votação</h1>
+
+  <form id="votingForm" onsubmit="castVote(event)">
+    <p>Selecione seu voto:</p>
+    <img class="candidateImage" src="candidato1.jpg" alt="Candidato 1" onclick="selectCandidate(1)">
+    <img class="candidateImage" src="candidato2.jpg" alt="Candidato 2" onclick="selectCandidate(2)">
+    <img class="candidateImage" src="candidato3.jpg" alt="Candidato 3" onclick="selectCandidate(3)">
+    <button type="submit" id="confirmButton">Confirmar Voto</button>
+  </form>
+
+  <div id="resultChart"></div>
+
+  <script src="voting.js">
+    const votingForm = document.getElementById('votingForm');
+const candidateImages = document.getElementsByClassName('candidateImage');
+const confirmButton = document.getElementById('confirmButton');
+const resultChart = document.getElementById('resultChart');
+
+let voteCount = 0;
+let candidateVotes = [0, 0, 0];
+
+function selectCandidate(candidate) {
+  for (let i = 0; i < candidateImages.length; i++) {
+    candidateImages[i].classList.remove('selectedCandidate');
+  }
+
+  candidateImages[candidate - 1].classList.add('selectedCandidate');
+  confirmButton.style.display = 'block';
+}
+
+function castVote(event) {
+  event.preventDefault();
+
+  const selectedCandidate = document.querySelector('.selectedCandidate');
+
+  if (!selectedCandidate) {
+    return;
+  }
+
+  voteCount++;
+  const candidate = Array.prototype.indexOf.call(candidateImages, selectedCandidate) + 1;
+  candidateVotes[candidate - 1]++;
+
+  if (voteCount === 1) {
+    createResultChart();
+  } else {
+    updateResultChart();
+  }
+
+  if (voteCount === 3) {
+    disableVoting();
+  }
+}
+
+function createResultChart() {
+  for (let i = 0; i < candidateVotes.length; i++) {
+    const candidateName = `Candidato ${i + 1}`;
+    const progressBar = `<div class="progressBar" id="progress${i + 1}"></div>`;
+    const result = `<p class="candidateName">${candidateName}</p> ${progressBar}`;
+    resultChart.innerHTML += result;
+  }
+}
+
+function updateResultChart() {
+  for (let i = 0; i < candidateVotes.length; i++) {
+    const progressBar = document.getElementById(`progress${i + 1}`);
+    const percentage = (candidateVotes[i] / voteCount) * 100;
+    progressBar.style.width = `${percentage}%`;
+  }
+}
+
+function disableVoting() {
+  for (let i = 0; i < candidateImages.length; i++) {
+    candidateImages[i].removeAttribute('onclick');
+  }
+
+  votingForm.reset();
+  confirmButton.style.display = 'none';
+}
+
+  </script>
+</body>
+</html>

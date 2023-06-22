@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        #searchForm {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+    
+        input[type="text"] {
+          padding: 10px;
+        }
+    
+        #weatherData {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+    
+        #weatherData img {
+          width: 100px;
+          margin-bottom: 10px;
+        }
+    
+        .error {
+          color: red;
+        }
+    
+        #suggestions {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+        }
+    
+        #suggestions li {
+          cursor: pointer;
+          padding: 5px;
+          background-color: #f1f1f1;
+          border: 1px solid #ddd;
+          margin-bottom: -1px;
+        }
+    
+        #suggestions li:hover {
+          background-color: #ddd;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>Previsão do Tempo</h1>
+    
+      <form id="searchForm">
+        <input type="text" id="locationInput" placeholder="Digite a localização desejada" onkeyup="getSuggestions(event)">
+        <button type="button" onclick="getWeather()">Buscar</button>
+      </form>
+    
+      <ul id="suggestions"></ul>
+    
+      <div id="weatherData"></div>
+    
+      <script>
+        const locationInput = document.getElementById('locationInput');
+        const suggestions = document.getElementById('suggestions');
+        const weatherData = document.getElementById('weatherData');
+        let timeoutId;
+    
+        function getWeather() {
+          const location = locationInput.value.trim();
+    
+          if (location === '') {
+            showError('Por favor, digite uma localização');
+            return;
+          }
+    
+          clearWeatherData();
+          showError('');
+    
+          const API_KEY = 'YOUR_API_KEY'; // Substitua pelo sua chave de API
+          const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`;
+    
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              if (data.cod === '404') {
+                showError('Localização não encontrada');
+              } else {
+                showWeatherData(data);
+              }
+            })
+            .catch(error => {
+              showError('Ocorreu um erro ao obter a previsão do tempo');
+              console.error(error);
+            });
+    
+          locationInput.value = '';
+          suggestions.innerHTML
+        </script>
