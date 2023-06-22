@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    li input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de Tarefas</h1>
+
+  <input type="text" id="taskInput" placeholder="Digite uma nova tarefa">
+  <button onclick="addTask()">Adicionar Tarefa</button>
+
+  <p class="error" id="errorMessage"></p>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const errorMessage = document.getElementById('errorMessage');
+    const taskList = document.getElementById('taskList');
+
+    function addTask() {
+      const task = taskInput.value.trim();
+
+      if (task === '') {
+        errorMessage.textContent = 'Por favor, digite uma tarefa';
+        return;
+      }
+
+      errorMessage.textContent = '';
+
+      const listItem = document.createElement('li');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      listItem.appendChild(checkbox);
+      listItem.appendChild(document.createTextNode(task));
+
+      taskList.appendChild(listItem);
+
+      taskInput.value = '';
+    }
+  </script>
+</body>
+</html>

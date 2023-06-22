@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão do Tempo</title>
+    
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 20px;
+        }
+    
+        h1 {
+          text-align: center;
+        }
+    
+        #searchForm {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+    
+        input[type="text"] {
+          padding: 10px;
+        }
+    
+        #weatherData {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+        }
+    
+        #weatherData img {
+          width: 100px;
+          margin-bottom: 10px;
+        }
+    
+        .error {
+          color: red;
+        }
+      </style>
+    </head>
+<body>  
+  <h1>Previsão do Tempo</h1>
+
+  <form id="searchForm" onsubmit="getWeather(event)">
+    <input type="text" id="locationInput" placeholder="Digite a localização desejada">
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div id="weatherData"></div>
+
+  <script>
+    const weatherData = document.getElementById('weatherData');
+    const locationInput = document.getElementById('locationInput');
+
+    function getWeather(event) {
+      event.preventDefault();
+
+      const location = locationInput.value.trim();
+
+      if (location === '') {
+        showError('Por favor, digite uma localização');
+        return;
+      }
+
+      clearWeatherData();
+      showError('');
+
+      const API_KEY = 'YOUR_API_KEY'; // Substitua pelo sua chave de API
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          if (data.cod === '404') {
+            showError('Localização não encontrada');
+          } else {
+            showWeatherData(data);
+          }
+        })
+        .catch(error => {
+          showError('Ocorreu um erro ao obter a previsão do tempo');
+          console.error(error);
+        });
+
+      locationInput.value = '';
+    }
+
+    function showWeatherData(data) {
+      const cityName = data.name;
+      const temperature = Math.round(data.main.temp - 273.15);
+      const weatherDescription = data.weather[0].description;
+      const weatherIcon = data.weather[0].icon;
+
+      const iconUrl = `http://openweathermap.org/img/wn/${weatherIcon}.png`;
+
+      const weatherHtml = `
+        <h2>${cityName}</h2>
+        <img src="${iconUrl}" alt="${weatherDescription}">
+        <p>${temperature}°C</p>
+        <p>${weatherDescription}</p>
+      `;
+
+      weatherData.innerHTML = weatherHtml;
+    }
+
+    function clearWeatherData() {
+      weatherData.innerHTML = '';
+    }
+
+    function showError(message) {
+      const errorMessage = document.getElementById('errorMessage');
+      errorMessage.textContent = message;
+    }
+  </script>
+</body>
+</html>
+
+    
+</body>
+</html>
