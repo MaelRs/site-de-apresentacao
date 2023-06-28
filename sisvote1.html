@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #candidates {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    #candidates img {
+      width: 200px;
+      height: auto;
+      margin: 0 10px;
+      border: 1px solid #ccc;
+      padding: 5px;
+    }
+
+    #progress-bar {
+      width: 300px;
+      height: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+
+    #progress-bar span {
+      display: block;
+      height: 100%;
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sistema de Eleição</h2>
+
+  <label for="votes">Número de votos a serem processados:</label>
+  <input type="number" id="votes" min="1"><br>
+
+  <div id="candidates">
+    <div>
+      <h3>Candidato 10 - João</h3>
+      <img src="pernalonga.jpg" alt="João">
+    </div>
+    <div>
+      <h3>Candidato 20 - José</h3>
+      <img src="picapau.jpg" alt="José">
+    </div>
+  </div>
+
+  <button onclick="iniciarVotacao()">Iniciar Votação</button>
+
+  <div id="voting-container" style="display: none;">
+    <h3>Votação em andamento</h3>
+    <div id="progress-bar"><span></span></div>
+    <div id="voting-info"></div>
+  </div>
+
+  <script>
+    var votesToProcess = 0;
+    var votesProcessed = 0;
+    var candidate10Votes = 0;
+    var candidate20Votes = 0;
+
+    function iniciarVotacao() {
+      votesToProcess = parseInt(document.getElementById("votes").value);
+
+      if (votesToProcess > 0) {
+        document.getElementById("voting-container").style.display = "block";
+        document.getElementById("candidates").style.display = "none";
+        document.getElementById("voting-info").innerHTML = "Votação em andamento...";
+
+        processarVoto();
+      } else {
+        alert("Por favor, insira um número válido de votos.");
+      }
+    }
+
+    function processarVoto() {
+      var candidateNumber = parseInt(prompt("Digite o número do candidato (10 ou 20):"));
+
+      if (candidateNumber === 10 || candidateNumber === 20) {
+        var candidateName = candidateNumber === 10 ? "João" : "José";
+        var confirmation = confirm("Você deseja votar em " + candidateName + "?");
+
+        if (confirmation) {
+          votesProcessed++;
+
+          if (candidateNumber === 10) {
+            candidate10Votes++;
+          } else {
+            candidate20Votes++;
+          }
+
+          updateProgressBar();
+
+          if (votesProcessed < votesToProcess) {
+            processarVoto();
+          } else {
+            encerrarVotacao();
+          }
+        } else {
+          processarVoto();
+        }
+      } else {
+        alert("Por favor, digite um número válido de candidato (10 ou 20).");
+        processarVoto();
+      }
+    }
+
+    function encerrarVotacao() {
+      document.getElementById("voting-info").innerHTML = "Votação encerrada! O candidato eleito foi " + getVencedor() + " com " + getVotosVencedor() + " votos válidos.";
+    }
+
+    function getVencedor() {
+      return candidate10Votes > candidate20Votes ? "João" : "José";
+    }
+
+    function getVotosVencedor() {
+      return candidate10Votes > candidate20Votes ? candidate10Votes : candidate20Votes;
+    }
+
+    function updateProgressBar() {
+      var progressBar = document.getElementById("progress-bar");
+      var percentage = (votesProcessed / votesToProcess) * 100;
+      progressBar.innerHTML = "<span style='width:" + percentage + "%'></span>";
+    }
+  </script>
+</body>
+</html>

@@ -31,10 +31,10 @@
     <div id="candidate-container">
       <h3>Candidatos:</h3>
       <div>
-        <button onclick="vote(10)">Candidato 10 - João
-        <img src="imagens/bobesponja.jpg" alt="João"></button>
-        <button onclick="vote(20)">Candidato 20 - José
-        <img src="imagens/pernalonga.jpg" alt="José"></button>
+        <button onclick="vote(10)">Candidato 10 - Bob-Esponja
+        <img src="imagens/bobesponja.jpg" alt="Bob-Esponja"></button>
+        <button onclick="vote(20)">Candidato 20 - Pernalonga
+        <img src="imagens/pernalonga.jpg" alt="Pernalonga"></button>
       </div>
     </div>
 
@@ -49,8 +49,8 @@
   <div id="result-container" style="display: none;">
     <h2>Resultado da Eleição</h2>
     <p id="total-valid-votes"></p>
-    <p id="votes-joao"></p>
-    <p id="votes-jose"></p>
+    <p id="votes-bobesponja"></p>
+    <p id="votes-pernalonga"></p>
     <div id="vote-graph"></div>
     <p id="winner-message" style="display: none;"></p>
   </div>
@@ -58,8 +58,9 @@
   <script>
     let totalVotes = 0;
     let votesProcessed = 0;
-    let votesJoao = 0;
-    let votesJose = 0;
+    let votesBobEsponja = 0;
+    let votesPernalonga = 0;
+    let porcentVotes = 0;
 
     function startVoting() {
       totalVotes = parseInt(document.getElementById("total-votes").value);
@@ -76,9 +77,9 @@
       document.getElementById("selected-candidate").textContent = "Você selecionou o Candidato " + candidateNumber;
 
       if (candidateNumber === 10) {
-        document.getElementById("selected-candidate").textContent += " - João";
+        document.getElementById("selected-candidate").textContent += " - Bob-Esponja";
       } else if (candidateNumber === 20) {
-        document.getElementById("selected-candidate").textContent += " - José";
+        document.getElementById("selected-candidate").textContent += " - Pernalonga";
       }
     }
 
@@ -92,10 +93,10 @@
       confirmationContainer.style.display = "none";
 
       const selectedCandidate = document.getElementById("selected-candidate").textContent;
-      if (selectedCandidate.includes("João")) {
-        votesJoao++;
-      } else if (selectedCandidate.includes("José")) {
-        votesJose++;
+      if (selectedCandidate.includes("Bob-Esponja")) {
+        votesBobEsponja++;
+      } else if (selectedCandidate.includes("Pernalonga")) {
+        votesPernalonga++;
       }
 
       document.getElementById("votes-processed").textContent = "Votos processados: " + votesProcessed + " / " + totalVotes;
@@ -116,15 +117,15 @@
     function endVoting() {
       const votingContainer = document.getElementById("voting-container");
       const resultContainer = document.getElementById("result-container");
-      const totalValidVotes = votesJoao + votesJose;
-      const winner = votesJoao > votesJose ? "Candidato 10 - João" : "Candidato 20 - José";
-
+      const totalValidVotes = votesBobEsponja + votesPernalonga;
+      const winner = votesBobEsponja > votesPernalonga ? "Candidato 10 - Bob-Esponja" : "Candidato 20 - Pernalonga";
+      
       votingContainer.style.display = "none";
       resultContainer.style.display = "block";
 
       document.getElementById("total-valid-votes").textContent = "Total de votos válidos: " + totalValidVotes;
-      document.getElementById("votes-joao").textContent = "Votos para o Candidato 10 - João: " + votesJoao;
-      document.getElementById("votes-jose").textContent = "Votos para o Candidato 20 - José: " + votesJose;
+      document.getElementById("votes-bobesponja").textContent = "Votos para o Candidato 10 - Bob-Esponja: " + votesBobEsponja;
+      document.getElementById("votes-pernalonga").textContent = "Votos para o Candidato 20 - Pernalonga: " + votesPernalonga;
 
       // Exibição de gráfico de barras (opcional)
       const voteGraph = document.getElementById("vote-graph");
@@ -132,28 +133,29 @@
       voteGraph.style.height = "200px";
       voteGraph.style.border = "1px solid #000";
 
-      const joaoPercentage = (votesJoao / totalValidVotes) * 100;
-      const josePercentage = (votesJose / totalValidVotes) * 100;
+      const bobPercentage = (votesBobEsponja / totalValidVotes) * 100;
+      const pernaPercentage = (votesPernalonga / totalValidVotes) * 100;
 
-      const joaoBar = document.createElement("div");
-      joaoBar.style.width = joaoPercentage + "%";
-      joaoBar.style.height = "100%";
-      joaoBar.style.backgroundColor = "blue";
-      joaoBar.style.float = "left";
+      const bobBar = document.createElement("div");
+      bobBar.style.width = bobPercentage + "%";
+      bobBar.style.height = "100%";
+      bobBar.style.backgroundColor = "blue";
+      bobBar.style.float = "left";
 
-      const joseBar = document.createElement("div");
-      joseBar.style.width = josePercentage + "%";
-      joseBar.style.height = "100%";
-      joseBar.style.backgroundColor = "red";
-      joseBar.style.float = "left";
+      const pernaBar = document.createElement("div");
+      pernaBar.style.width = pernaPercentage + "%";
+      pernaBar.style.height = "100%";
+      pernaBar.style.backgroundColor = "red";
+      pernaBar.style.float = "left";
 
-      voteGraph.appendChild(joaoBar);
-      voteGraph.appendChild(joseBar);
+      voteGraph.appendChild(bobBar);
+      voteGraph.appendChild(pernaBar);
 
       // Exibição do candidato eleito
       const winnerMessage = document.getElementById("winner-message");
       winnerMessage.style.display = "block";
-      winnerMessage.textContent = "Votação encerrada! O candidato eleito foi " + winner + " com " + (winner === "Candidato 10 - João" ? votesJoao : votesJose) + " votos válidos.";
+
+      winnerMessage.textContent = "Votação encerrada! O candidato eleito foi " + winner + " com " + (winner === "Candidato 10 - Bob-Esponja" ? votesBobEsponja : votesPernalonga) + " votos válidos.";
     }
   </script>
 </body>

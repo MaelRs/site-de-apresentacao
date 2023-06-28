@@ -1,0 +1,66 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .candidates {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .candidates label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+
+  .candidates input[type="radio"] {
+    display: none;
+  }
+
+  .candidates img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .candidates input[type="radio"]:checked + img {
+    opacity: 1;
+  }
+
+  .confirm-button {
+    text-align: center;
+  }
+
+  .result-chart {
+    margin-top: 20px;
+  }
+
+  .result-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .result-bar span {
+    margin-right: 10px;
+  }
+
+  .result-bar .bar {
+    height: 20px;
+    background-color: #2196F3;
+  }

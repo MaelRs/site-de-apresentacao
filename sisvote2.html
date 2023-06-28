@@ -65,9 +65,9 @@
 
   <form id="votingForm" onsubmit="castVote(event)">
     <p>Selecione seu voto:</p>
-    <img class="candidateImage" src="candidato1.jpg" alt="Candidato 1" onclick="selectCandidate(1)">
-    <img class="candidateImage" src="candidato2.jpg" alt="Candidato 2" onclick="selectCandidate(2)">
-    <img class="candidateImage" src="candidato3.jpg" alt="Candidato 3" onclick="selectCandidate(3)">
+    <img class="candidateImage" src="imagens/bobesponja.jpg" alt="Candidato 1" onclick="selectCandidate(1)">
+    <img class="candidateImage" src="imagens/pernalonga.jpg" alt="Candidato 2" onclick="selectCandidate(2)">
+    <img class="candidateImage" src="imagens/picapau.jpg" alt="Candidato 3" onclick="selectCandidate(3)">
     <button type="submit" id="confirmButton">Confirmar Voto</button>
   </form>
 
@@ -75,12 +75,12 @@
 
   <script src="voting.js">
     const votingForm = document.getElementById('votingForm');
-const candidateImages = document.getElementsByClassName('candidateImage');
-const confirmButton = document.getElementById('confirmButton');
-const resultChart = document.getElementById('resultChart');
+    const candidateImages = document.getElementsByClassName('candidateImage');
+    const confirmButton = document.getElementById('confirmButton');
+    const resultChart = document.getElementById('resultChart');
 
-let voteCount = 0;
-let candidateVotes = [0, 0, 0];
+    let voteCount = 0;
+    let candidateVotes = [0, 0, 0];
 
 function selectCandidate(candidate) {
   for (let i = 0; i < candidateImages.length; i++) {

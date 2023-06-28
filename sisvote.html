@@ -3,75 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Votação</title>
-    
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    .candidates {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .candidates label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-right: 20px;
-      cursor: pointer;
-    }
-
-    .candidates input[type="radio"] {
-      display: none;
-    }
-
-    .candidates img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      margin-bottom: 5px;
-      opacity: 0.7;
-      transition: opacity 0.3s;
-    }
-
-    .candidates input[type="radio"]:checked + img {
-      opacity: 1;
-    }
-
-    .confirm-button {
-      text-align: center;
-    }
-
-    .result-chart {
-      margin-top: 20px;
-    }
-
-    .result-bar {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .result-bar span {
-      margin-right: 10px;
-    }
-
-    .result-bar .bar {
-      height: 20px;
-      background-color: #2196F3;
-    }
-  </style>
+    <link rel="stylesheet" href="style.css">
+    <title>Votação</title>    
 </head>
 <body>
     
@@ -118,42 +51,45 @@
   </div>
 
   <script>
-    const result1 = document.getElementById('result1');
-    const result2 = document.getElementById('result2');
-    const result3 = document.getElementById('result3');
-    const confirmButton = document.querySelector('.confirm-button button');
-    const candidateRadios = document.querySelectorAll('.candidates input[type="radio"]');
-    const resultBars = document.querySelectorAll('.result-bar');
+    let c=5;
+    while (c>0) {
+      c--
+      const result1 = document.getElementById('result1');
+      const result2 = document.getElementById('result2');
+      const result3 = document.getElementById('result3');
+      const confirmButton = document.querySelector('.confirm-button button');
+      const candidateRadios = document.querySelectorAll('.candidates input[type="radio"]');
+      const resultBars = document.querySelectorAll('.result-bar');
+    }
+      let votes = {
+        candidate1: 0,
+        candidate2: 0,
+        candidate3: 0
+      };
+      
 
-    let votes = {
-      candidate1: 0,
-      candidate2: 0,
-      candidate3: 0
-    };
-    
+      function confirmVote() {
+        const selectedCandidate = document.querySelector('.candidates input[type="radio"]:checked');
 
-    function confirmVote() {
-      const selectedCandidate = document.querySelector('.candidates input[type="radio"]:checked');
-
-      if (selectedCandidate) {
-        votes[selectedCandidate.value]++;
-        updateResultChart();
-        resetSelection();
-        confirmButton.disabled = true;
+        if (selectedCandidate) {
+          votes[selectedCandidate.value]++;
+          updateResultChart();
+          resetSelection();
+          confirmButton.disabled = true;
+        }
       }
-    }
 
-    function updateResultChart() {
-      const totalVotes = Object.values(votes).reduce((sum, vote) => sum + vote, 0);
+      function updateResultChart() {
+        const totalVotes = Object.values(votes).reduce((sum, vote) => sum + vote, 0);
 
-      resultBars.forEach((resultBar, index) => {
-        const candidateName = `candidate${index + 1}`;
-        const votePercentage = totalVotes !== 0 ? ((votes[candidateName] / totalVotes) * 100).toFixed(2) : 0;
+        resultBars.forEach((resultBar, index) => {
+          const candidateName = `candidate${index + 1}`;
+          const votePercentage = totalVotes !== 0 ? ((votes[candidateName] / totalVotes) * 100).toFixed(2) : 0;
 
-        resultBar.querySelector('.bar').style.width = `${votePercentage}%`;
-        resultBar.querySelector('.bar').textContent = `${votePercentage}%`;
-      });
-    }
+          resultBar.querySelector('.bar').style.width = `${votePercentage}%`;
+          resultBar.querySelector('.bar').textContent = `${votePercentage}%`;
+        });
+      }
 
     function resetSelection() {
       candidateRadios.forEach(candidateRadio => {
