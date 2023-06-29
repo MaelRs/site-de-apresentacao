@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Folha de Pagamento</title>
+  <style>
+    /* Estilos CSS */
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    table th, table td {
+      padding: 8px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    
+    /* Estilos adicionais de acordo com a necessidade */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Folha de Pagamento</h1>
+    
+    <!-- Formulário para adicionar dados dos funcionários -->
+    <form id="employeeForm">
+      <label for="name">Nome:</label>
+      <input type="text" id="name" required>
+      
+      <label for="position">Cargo:</label>
+      <input type="text" id="position" required>
+      
+      <label for="salary">Salário:</label>
+      <input type="number" id="salary" required>
+      
+      <label for="daysWorked">Dias Trabalhados:</label>
+      <input type="number" id="daysWorked" required>
+      
+      <label for="extraHours">Horas Extras:</label>
+      <input type="number" id="extraHours" required>
+      
+      <label for="deductions">Descontos:</label>
+      <input type="number" id="deductions" required>
+      
+      <label for="allowances">Adicionais:</label>
+      <input type="number" id="allowances" required>
+      
+      <button type="submit">Adicionar Funcionário</button>
+    </form>
+    
+    <!-- Botão para gerar folha de pagamento -->
+    <button id="generatePayrollButton">Gerar Folha de Pagamento</button>
+    
+    <!-- Botão para exibir a relação de funcionários -->
+    <button id="showEmployeeListButton">Exibir Relação de Funcionários</button>
+    
+    <!-- Tabela para exibir a folha de pagamento -->
+    <table id="payrollTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cargo</th>
+          <th>Salário Base</th>
+          <th>Horas Extras</th>
+          <th>Adicionais</th>
+          <th>Descontos</th>
+          <th>Salário Líquido</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="payrollTableBody"></tbody>
+    </table>
+    
+    <!-- Tabela para exibir a relação de funcionários -->
+    <table id="employeeListTable" style="display: none;">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Cargo</th>
+          <th>Salário</th>
+        </tr>
+      </thead>
+      <tbody id="employeeListTableBody"></tbody>
+    </table>
+  </div>
+
+  <script>
+    // Variáveis globais para armazenar os dados dos funcionários
+    let employees = [];
+    
+    // Função para adicionar um funcionário
+    function addEmployee(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const position = document.getElementById('position').value;
+      const salary = parseFloat(document.getElementById('salary').value);
+      const daysWorked = parseInt(document.getElementById('daysWorked').value);
+      const extraHours = parseInt(document.getElementById('extraHours').value);
+      const deductions = parseFloat(document.getElementById('deductions').value);
+      const allowances = parseFloat(document.getElementById('allowances').value);
+      
+      const employee = {
+        name,
+        position,
+        salary,
+        daysWorked,
+        extraHours,
+        deductions,
+        allowances
+      };
+      
+      employees.push(employee);
+      
+      document.getElementById('name').value = '';
+      document.getElementById('position').value = '';
+      document.getElementById('salary').value = '';
+      document.getElementById('daysWorked').value = '';
+      document.getElementById('extraHours').value = '';
+      document.getElementById('deductions').value = '';
+      document.getElementById('allowances').value = '';
+    }
+    
+    // Função para gerar a folha de pagamento
+    function generatePayroll() {
+      const payrollTableBody = document.getElementById('payrollTableBody');
+      
+      payrollTableBody.innerHTML = '';
+      
+      employees.forEach((employee) => {
+        const baseSalary = employee.salary;
+        const extraSalary = (employee.salary / 30) * employee.extraHours;
+        const totalAllowances = employee.allowances;
+        const totalDeductions = employee.deductions;
+        const netSalary = baseSalary + extraSalary + totalAllowances - totalDeductions;
+        
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+          <td>${employee.name}</td>
+          <td>${employee.position}</td>
+          <td>${employee.salary}</td>
+          <td>${employee.extraHours}</td>
+          <td>${employee.allowances}</td>
+          <td>${employee.deductions}</td>
+          <td>${netSalary}</td>
+          <td>
+            <button onclick="deleteEmployee(${employees.indexOf(employee)})">Excluir</button>
+          </td>
+        `;
+        
+        payrollTableBody.appendChild(row);
+      });
+      
+      document.getElementById('payrollTable').style.display = 'table';
+    }
+    
+    // Função para exibir a relação de funcionários
+    function showEmployeeList() {
+      const employeeListTableBody = document.getElementById('employeeListTableBody');
+      
+      employeeListTableBody.innerHTML = '';
+      
+      employees.forEach((employee) => {
+        const row = document.createElement('tr');
+        
+        row.innerHTML = `
+          <td>${employee.name}</td>
+          <td>${employee.position}</td>
+          <td>${employee.salary}</td>
+        `;
+        
+        employeeListTableBody.appendChild(row);
+      });
+      
+      document.getElementById('employeeListTable').style.display = 'table';
+    }
+    
+    // Função para excluir um funcionário da lista
+    function deleteEmployee(index) {
+      employees.splice(index, 1);
+      generatePayroll();
+      showEmployeeList();
+    }
+    
+    // Eventos dos botões e formulário
+    document.getElementById('employeeForm').addEventListener('submit', addEmployee);
+    document.getElementById('generatePayrollButton').addEventListener('click', generatePayroll);
+    document.getElementById('showEmployeeListButton').addEventListener('click', showEmployeeList);
+  </script>
+</body>
+</html>

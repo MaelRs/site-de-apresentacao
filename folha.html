@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+<head>
+  <title>Cadastro de Funcionário</title>
+  <style>
+    /* Estilos CSS */
+  </style>
+</head>
+<body>
+  <h1>Folha de Pagamento</h1>
+
+  <!-- Formulário para adicionar funcionários -->
+  <h2>Adicionar Funcionário</h2>
+  <form id="addForm">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" required><br>
+
+    <label for="dataAdmissao">Data de Admissão:</label>
+    <input type="date" id="dataAdmissao" required><br>
+
+    <label for="cargo">Cargo:</label>
+    <input type="text" id="cargo" required><br>
+
+    <label for="chSemanal">CH Semanal:</label>
+    <input type="number" id="chSemanal" required><br>
+
+    <label for="chMensal">CH Mensal:</label>
+    <input type="number" id="chMensal" required><br>
+
+    <label for="salarioBase">Salário Base:</label>
+    <input type="number" id="salarioBase" required><br>
+
+    <label for="diasTrabalhados">Dias Trabalhados:</label>
+    <input type="number" id="diasTrabalhados" required><br>
+
+    <label for="horasExtras">Horas Extras:</label>
+    <input type="number" id="horasExtras" required><br>
+
+    <label for="descontos">Descontos:</label>
+    <input type="number" id="descontos" required><br>
+
+    <label for="adicionais">Adicionais:</label>
+    <input type="number" id="adicionais" required><br>
+
+    <label for="valeTransporte">Opção pelo Vale Transporte:</label>
+    <select id="valeTransporte" required>
+      <option value="sim">Sim</option>
+      <option value="nao">Não</option>
+    </select><br>
+
+    <label for="insalubridade">Insalubridade:</label>
+    <select id="insalubridade" required>
+      <option value="sim">Sim</option>
+      <option value="nao">Não</option>
+    </select><br>
+
+    <label for="turnoTrabalho">Turno de Trabalho:</label>
+    <select id="turnoTrabalho" required>
+      <option value="diurno">Diurno</option>
+      <option value="noturno">Noturno</option>
+    </select><br>
+
+    <label for="valeAlimentacao">Vale Alimentação:</label>
+    <input type="number" id="valeAlimentacao" required><br>
+
+    <label for="valeRefeicao">Vale Refeição:</label>
+    <input type="number" id="valeRefeicao" required><br>
+
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <!-- Tabela para exibir a lista de funcionários -->
+  <h2>Lista de Funcionários</h2>
+  <table id="employeeTable">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <!-- Outras colunas da tabela -->
+        <!-- ... -->
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Linhas da tabela -->
+    </tbody>
+  </table>
+
+  <!-- Contracheque -->
+  <div id="contracheque">
+    <!-- Conteúdo do contracheque será preenchido dinamicamente -->
+  </div>
+
+  <script>
+    // Array para armazenar os funcionários
+    let employees = [];
+
+    // Função para adicionar um funcionário
+    function addEmployee(event) {
+      event.preventDefault();
+
+      // Obter os valores dos campos do formulário
+      const nome = document.getElementById("nome").value;
+      const dataAdmissao = document.getElementById("dataAdmissao").value;
+      const cargo = document.getElementById("cargo").value;
+      const chSemanal = document.getElementById("chSemanal").value;
+      const chMensal = document.getElementById("chMensal").value;
+      const salarioBase = document.getElementById("salarioBase").value;
+      const diasTrabalhados = document.getElementById("diasTrabalhados").value;
+      const horasExtras = document.getElementById("horasExtras").value;
+      const descontos = document.getElementById("descontos").value;
+      const adicionais = document.getElementById("adicionais").value;
+      const valeTransporte = document.getElementById("valeTransporte").value;
+      const insalubridade = document.getElementById("insalubridade").value;
+      const turnoTrabalho = document.getElementById("turnoTrabalho").value;
+      const valeAlimentacao = document.getElementById("valeAlimentacao").value;
+      const valeRefeicao = document.getElementById("valeRefeicao").value;
+
+      // Criar um objeto de funcionário com os dados fornecidos
+      const employee = {
+        nome: nome,
+        dataAdmissao: dataAdmissao,
+        cargo: cargo,
+        chSemanal: chSemanal,
+        chMensal: chMensal,
+        salarioBase: salarioBase,
+        diasTrabalhados: diasTrabalhados,
+        horasExtras: horasExtras,
+        descontos: descontos,
+        adicionais: adicionais,
+        valeTransporte: valeTransporte,
+        insalubridade: insalubridade,
+        turnoTrabalho: turnoTrabalho,
+        valeAlimentacao: valeAlimentacao,
+        valeRefeicao: valeRefeicao
+      };
+
+      // Adicionar o funcionário ao array de funcionários
+      employees.push(employee);
+
+      // Limpar os campos do formulário
+      document.getElementById("nome").value = "";
+      document.getElementById("dataAdmissao").value = "";
+      document.getElementById("cargo").value = "";
+      document.getElementById("chSemanal").value = "";
+      document.getElementById("chMensal").value = "";
+      document.getElementById("salarioBase").value = "";
+      document.getElementById("diasTrabalhados").value = "";
+      document.getElementById("horasExtras").value = "";
+      document.getElementById("descontos").value = "";
+      document.getElementById("adicionais").value = "";
+      document.getElementById("valeTransporte").value = "sim";
+      document.getElementById("insalubridade").value = "nao";
+      document.getElementById("turnoTrabalho").value = "diurno";
+      document.getElementById("valeAlimentacao").value = "";
+      document.getElementById("valeRefeicao").value = "";
+
+      // Atualizar a tabela de funcionários
+      updateEmployeeTable();
+    }
+
+    // Função para atualizar a tabela de funcionários
+    function updateEmployeeTable() {
+      const tableBody = document.getElementById("employeeTable").getElementsByTagName("tbody")[0];
+      tableBody.innerHTML = "";
+
+      // Preencher as linhas da tabela com os funcionários
+      for (const employee of employees) {
+        const row = tableBody.insertRow();
+
+        const nomeCell = row.insertCell();
+        nomeCell.textContent = employee.nome;
+
+        // Inserir outras células da tabela
+        // ...
+        
+        const actionsCell = row.insertCell();
+        actionsCell.innerHTML = '<button onclick="viewEmployeeDetails()">Detalhes</button>';
+      }
+    }
+
+    // Função para exibir os detalhes de um funcionário
+    function viewEmployeeDetails() {
+      // Obter o índice do funcionário selecionado
+      // ...
+
+      // Exibir os detalhes do funcionário
+      // ...
+    }
+
+    // Função para gerar o contracheque de um funcionário
+    function generatePayroll(employee) {
+      // Realizar os cálculos para gerar o contracheque
+      // ...
+
+      // Atualizar o conteúdo do elemento "contracheque" com os valores calculados
+      // ...
+    }
+
+    // Event listener para o formulário de adicionar funcionário
+    const addForm = document.getElementById("addForm");
+    addForm.addEventListener("submit", addEmployee);
+  </script>
+</body>
+</html>
