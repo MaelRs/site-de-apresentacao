@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-Br">
 <head>
   <title>Folha de Pagamento</title>
   <style>
     /* Estilos CSS */
     body {
       font-family: Arial, sans-serif;
+      
     }
     
     .container {
@@ -46,14 +47,20 @@
       <input type="text" id="position" required>
       
       <label for="salary">Salário:</label>
-      <input type="number" id="salary" required>
+      <input type="number" id="salary" required> <br>
       
       <label for="daysWorked">Dias Trabalhados:</label>
       <input type="number" id="daysWorked" required>
       
       <label for="extraHours">Horas Extras:</label>
-      <input type="number" id="extraHours" required>
+      <input type="number" id="extraHours" required> <br>
       
+      <label for="VA">Vale-Alimentação:</label>
+      <input type="number" id="VA" required>
+
+      <label for="VA">Vale-Refeição:</label>
+      <input type="number" id="VR" required>
+
       <label for="deductions">Descontos:</label>
       <input type="number" id="deductions" required>
       
@@ -112,6 +119,8 @@
       const salary = parseFloat(document.getElementById('salary').value);
       const daysWorked = parseInt(document.getElementById('daysWorked').value);
       const extraHours = parseInt(document.getElementById('extraHours').value);
+      const valeAlimentacao = parseInt(document.getElementById('VA').value);
+      const valeRefeicao = parseInt(document.getElementById('VR').value);
       const deductions = parseFloat(document.getElementById('deductions').value);
       const allowances = parseFloat(document.getElementById('allowances').value);
       
@@ -143,11 +152,11 @@
       payrollTableBody.innerHTML = '';
       
       employees.forEach((employee) => {
-        const baseSalary = employee.salary;
+        const monthSalary = (employee.salary/30)*daysWorked;
         const extraSalary = (employee.salary / 30) * employee.extraHours;
         const totalAllowances = employee.allowances;
         const totalDeductions = employee.deductions;
-        const netSalary = baseSalary + extraSalary + totalAllowances - totalDeductions;
+        const netSalary = monthSalary + extraSalary + totalAllowances - totalDeductions;
         
         const row = document.createElement('tr');
         
