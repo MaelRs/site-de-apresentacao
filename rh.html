@@ -149,9 +149,7 @@
     let employees = [];
     
     // Função para adicionar um funcionário
-    function addEmployee(event) {
-      event.preventDefault();
-      
+    function addEmployee() {      
       const name = document.getElementById('name').value;
       const nasc = document.getElementById('nasc').value;
       const position = document.getElementById('position').value;
@@ -192,14 +190,30 @@
       document.getElementById('deductions').value = '';
       document.getElementById('allowances').value = '';
     }
+
+    function calculateNetSalary(salary) {
+        let inssPercentage;
+        
+        if (salary <= 1321) {
+          inssPercentage = 0.085;
+        } else if (salary <= 1913) {
+          inssPercentage = 0.11;
+        } else {
+          inssPercentage = 0.13;
+        }
+        
+        const inssDeduction = salary * inssPercentage;
+        const netSalary = salary - inssDeduction;
+        
+        return netSalary;
+      }
     
     // Função para gerar a folha de pagamento
     function generatePayroll() {
-      const payrollTableBody = document.getElementById('payrollTableBody');
-      
+      const payrollTableBody = document.getElementById('payrollTableBody');      
       payrollTableBody.innerHTML = '';
       
-      employees.forEach((employee) => {
+      employees.forEach(function(employee, index)) => {
         const monthSalary = (employee.salary/30)*employee.daysWorked;
         const extraSalary = (employee.salary / employee.chm) * employee.extraHours;
         const totalAllowances = employee.allowances;
@@ -229,24 +243,22 @@
     
     // Função para exibir a relação de funcionários
     function showEmployeeList() {
-      const employeeListTableBody = document.getElementById('employeeListTableBody');
-      
-      employeeListTableBody.innerHTML = '';
-      
-      employees.forEach((employee) => {
-        const row = document.createElement('tr');
+        const tableBody = document.getElementById('employeeListTableBody');
+        tableBody.innerHTML = '';
         
-        row.innerHTML = `
-          <td>${employee.name}</td>
-          <td>${employee.position}</td>
-          <td>${employee.salary}</td>
-        `;
+        employees.forEach(function(employee) {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${employee.name}</td>
+            <td>${employee.position}</td>
+            <td>${employee.salary.toFixed(2)}</td>
+          `;
+          
+          tableBody.appendChild(row);
+        });
         
-        employeeListTableBody.appendChild(row);
-      });
-      
-      document.getElementById('employeeListTable').style.display = 'table';
-    }
+        document.getElementById('employeeListTable').style.display = 'table';
+      }
     
     // Função para excluir um funcionário da lista
     function deleteEmployee(index) {
