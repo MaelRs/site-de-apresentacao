@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-Br">
 <head>
-  <title>Folha de Pagamento</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Pagamento</title>
   <style>
     /* Estilos CSS */
     body {
@@ -35,6 +38,7 @@
   </style>
 </head>
 <body>
+  
   <div class="container">
     <h1>Folha de Pagamento</h1>
     
@@ -42,27 +46,60 @@
     <form id="employeeForm">
       <label for="name">Nome:</label>
       <input type="text" id="name" required>
+
+      <label for="nasc">Data Nascimento:</label>
+      <input type="date" id="nasc" required>
       
       <label for="position">Cargo:</label>
-      <input type="text" id="position" required>
+      <input type="text" id="position" required> <br>
+
+      <label for="cpf">CPF:</label>
+      <input type="number" id="cpf" required>
+
+      <label for="pis">PIS:</label>
+      <input type="number" id="pis" required>
+
+      <label for="ctps">CTPS:</label>
+      <input type="number" id="ctps" required> <br>
+
+      <label for="dtCtps">Data CTPS:</label>
+      <input type="date" id="dtCtps" required>
+
+      <label for="rg">Numero RG:</label>
+      <input type="number" id="rg" required>
+
+      <label for="dtRg">Data RG:</label>
+      <input type="date" id="dtRg" required> <br>
       
       <label for="salary">Salário:</label>
-      <input type="number" id="salary" required> <br>
+      <input type="number" id="salary" required>
+
+      <label for="chm">Carga horaria Mensal:</label>
+      <input type="number" id="chm" required> <br>
+
+      <label for="chs">Carga horaria semanal:</label>
+      <input type="number" id="chs" required>
+
+      <label for="turno">Turno de Trabalho:</label>
+      <input type="text" id="turno" required> <br>
+
+      <label for="vt">Vale transporte:</label>
+      <input type="text" id="vt" required>
       
       <label for="daysWorked">Dias Trabalhados:</label>
-      <input type="number" id="daysWorked" required>
+      <input type="number" id="daysWorked" required> <br>
       
       <label for="extraHours">Horas Extras:</label>
-      <input type="number" id="extraHours" required> <br>
+      <input type="number" id="extraHours" required>
       
       <label for="VA">Vale-Alimentação:</label>
-      <input type="number" id="VA" required>
+      <input type="number" id="VA" required> <br>
 
       <label for="VA">Vale-Refeição:</label>
       <input type="number" id="VR" required>
 
       <label for="deductions">Descontos:</label>
-      <input type="number" id="deductions" required>
+      <input type="number" id="deductions" required> <br>
       
       <label for="allowances">Adicionais:</label>
       <input type="number" id="allowances" required>
@@ -79,6 +116,7 @@
     <!-- Tabela para exibir a folha de pagamento -->
     <table id="payrollTable" style="display: none;">
       <thead>
+       <h1>Nome da Empresa</h1>    Referencia:
         <tr>
           <th>Nome</th>
           <th>Cargo</th>
@@ -115,8 +153,18 @@
       event.preventDefault();
       
       const name = document.getElementById('name').value;
+      const nasc = document.getElementById('nasc').value;
       const position = document.getElementById('position').value;
+      const cpf = document.getElementById('cpf').value;
+      const pis = document.getElementById('pis').value;
+      const ctps = document.getElementById('ctps').value;
+      const dtctps = document.getElementById('dtctps').value;
+      const rg = document.getElementById('rg').value;
+      const dtrg = document.getElementById('dtrg').value;
       const salary = parseFloat(document.getElementById('salary').value);
+      const chm = document.getElementById('chm').value;
+      const chs = document.getElementById('chs').value;
+      const turno = document.getElementById('turno').value;
       const daysWorked = parseInt(document.getElementById('daysWorked').value);
       const extraHours = parseInt(document.getElementById('extraHours').value);
       const valeAlimentacao = parseInt(document.getElementById('VA').value);
@@ -152,8 +200,8 @@
       payrollTableBody.innerHTML = '';
       
       employees.forEach((employee) => {
-        const monthSalary = (employee.salary/30)*daysWorked;
-        const extraSalary = (employee.salary / 30) * employee.extraHours;
+        const monthSalary = (employee.salary/30)*employee.daysWorked;
+        const extraSalary = (employee.salary / employee.chm) * employee.extraHours;
         const totalAllowances = employee.allowances;
         const totalDeductions = employee.deductions;
         const netSalary = monthSalary + extraSalary + totalAllowances - totalDeductions;
